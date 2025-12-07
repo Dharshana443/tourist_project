@@ -1,0 +1,40 @@
+<!-- destinations_app/templates/destinations_app/destination_list.html -->
+{% extends 'destinations_app/base.html' %}
+
+{% block title %}All Destinations{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Tourist Destinations</h1>
+<a href="{% url 'destination-create' %}" class="btn btn-success mb-4">Add New Destination</a>
+
+<div class="row">
+    {% for destination in destinations %}
+    <div class="col-md-4">
+        <div class="card">
+            {% if destination.destination_img %}
+            <img src="{{ destination.destination_img.url }}" class="card-img-top img-thumbnail" alt="{{ destination.place_name }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ destination.place_name }}</h5>
+                <p class="card-text">
+                    <strong>Weather:</strong> {{ destination.get_weather_display }}<br>
+                    <strong>Location:</strong> {{ destination.district }}, {{ destination.state }}<br>
+                    <small class="text-muted">{{ destination.description|truncatewords:20 }}</small>
+                </p>
+                <div class="btn-group">
+                    <a href="{% url 'destination-detail' destination.pk %}" class="btn btn-sm btn-info">View</a>
+                    <a href="{% url 'destination-update' destination.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'destination-delete' destination.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">
+            No destinations found. <a href="{% url 'destination-create' %}">Add the first one!</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

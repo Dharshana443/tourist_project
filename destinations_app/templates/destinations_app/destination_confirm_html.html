@@ -1,0 +1,32 @@
+<!-- destinations_app/templates/destinations_app/destination_confirm_delete.html -->
+{% extends 'destinations_app/base.html' %}
+
+{% block title %}Delete Destination{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">Delete Destination</h4>
+            </div>
+            <div class="card-body">
+                <p>Are you sure you want to delete the following destination?</p>
+
+                <div class="alert alert-warning">
+                    <h5>{{ destination.place_name }}</h5>
+                    <p>{{ destination.district }}, {{ destination.state }}</p>
+                </div>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                        <a href="{% url 'destination-list' %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
